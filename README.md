@@ -1,4 +1,4 @@
-# Natural Language Foundation
+# Semantic Grounding
 teach an agent the notions of spatial representation and manipulation with the aim of developing grounded concepts that can be used in natural language. 
 
 The goal is to create a multi-agent world, where agents have to cooperate to succeed in completing repeated tasks.
