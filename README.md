@@ -1,7 +1,12 @@
 # Semantic Grounding
 teach an agent the notions of spatial representation and manipulation with the aim of developing grounded concepts that can be used in natural language. 
 
-The goal is to create a multi-agent world, where agents have to cooperate to succeed in completing repeated tasks.
+## Future
+
+- multiple agents work together on shared goal 
+- agents work on goal based on repeated process
+- communication between agents evolves indicative, imperative and interrogative elements (see Russell)
+- create a more immersive world & agents that are more closely aligned to human bodies (in terms of sensors & actuators)
 
 ## compile world
 
@@ -14,6 +19,6 @@ page then becomes available at http://localhost:9615/index.html
 use "python app.py"
 
 ## todo
-- create basic interactive agent
+- design & code basic interacting agent
 - adjust world for goal-learning scenario
 - ...
