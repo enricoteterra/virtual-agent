@@ -14,43 +14,43 @@ class MouseActuator(object):
         self.driver = webDriver
         self.canvas = webDriver.find_element_by_tag_name('canvas')
 
-    def scrollUp(self):
+    def scrollUp(self, distance=20):
 
         self.centerCursor()
 
         ActionChains(self.driver)\
                 .click_and_hold()\
-                .move_by_offset(0, -100)\
+                .move_by_offset(0, -distance)\
                 .release()\
                 .perform()
 
-    def scrollDown(self):
+    def scrollDown(self, distance=20):
 
         self.centerCursor()
 
         ActionChains(self.driver)\
                 .click_and_hold()\
-                .move_by_offset(0, 100)\
+                .move_by_offset(0, distance)\
                 .release()\
                 .perform()
 
-    def scrollLeft(self):
+    def scrollLeft(self, distance=20):
 
         self.centerCursor()
 
         ActionChains(self.driver)\
                 .click_and_hold()\
-                .move_by_offset(-100, 0)\
+                .move_by_offset(-distance, 0)\
                 .release()\
                 .perform()
 
-    def scrollRight(self):
+    def scrollRight(self, distance=20):
 
         self.centerCursor()
 
         ActionChains(self.driver)\
                 .click_and_hold()\
-                .move_by_offset(100, 0)\
+                .move_by_offset(distance, 0)\
                 .release()\
                 .perform()
 

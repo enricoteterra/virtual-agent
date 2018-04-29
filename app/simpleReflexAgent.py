@@ -3,6 +3,9 @@ from selenium import webdriver
 from units import unit
 from app.mouseActuator import MouseActuator
 from app.screenSensor import ScreenSensor
+from app.keyActuator import KeyActuator
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 second = unit('s')
 
@@ -19,7 +22,8 @@ class SimpleReflexAgent(object):
         browser.get('http://localhost:9615/index.html')
 
         sensor = ScreenSensor(browser)
-        actuator = MouseActuator(browser)
+        mouse = MouseActuator(browser)
+        key = KeyActuator(browser)
 
         # start the loop
         while True:
@@ -32,5 +36,6 @@ class SimpleReflexAgent(object):
             browser.get_screenshot_as_file('./latest.png')
 
             # perform an action
-            actuator.scrollRight()
-            actuator.scrollUp()
+            # mouse.scrollRight()
+            mouse.scrollUp(20)
+            key.pressDown(0.2)

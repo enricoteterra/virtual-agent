@@ -113,6 +113,11 @@ var createScene = function(){
     border2.physicsImpostor = new BABYLON.PhysicsImpostor(border2, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
     border3.physicsImpostor = new BABYLON.PhysicsImpostor(border3, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
 
+    camera.keysUp.push(87); // "w"
+    camera.keysDown.push(83); // "s"
+    camera.keysLeft.push(65); // "a"
+    camera.keysRight.push(68); // "d"
+
     return scene;
 }
 
@@ -126,3 +131,7 @@ engine.runRenderLoop(function(){
 window.addEventListener('resize', function(){
     engine.resize();
 });
+
+var canvas=document.getElementById('canvas') as HTMLCanvasElement;
+canvas.setAttribute('tabindex','0');
+canvas.focus();
