@@ -1,20 +1,15 @@
 import time
 from selenium import webdriver
 from units import unit
-from app.mouseActuator import MouseActuator
-from app.screenSensor import ScreenSensor
-from app.keyActuator import KeyActuator
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-
+from mouseActuator import MouseActuator
+from screenSensor import ScreenSensor
+from keyActuator import KeyActuator
 second = unit('s')
 
 class SimpleReflexAgent(object):
     """ an agent without state or goals, just react to last sensor percept. """
 
     def loop(self, frequency=second(1)):
-
-        # note: we are using the webdriver as both the sensor and actuator
 
         browser = webdriver.Chrome('/Users/enrico.t/bin/chromedriver')
         browser.set_window_size('400', '300')
@@ -33,7 +28,7 @@ class SimpleReflexAgent(object):
 
             # get latest screen state
             state = sensor.getScreen()
-            browser.get_screenshot_as_file('./latest.png')
+            # browser.get_screenshot_as_file('./latest.png')
 
             # perform an action
             # mouse.scrollRight()

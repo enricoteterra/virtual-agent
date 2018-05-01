@@ -73,8 +73,6 @@ class KeyActuator(object):
 
             if time.time() > endtime:
                 self.dispatchKeyEvent(self.driver, "keyUp", options)
-                print options
-                print 'keyup'
                 break
 
             options["autoRepeat"] = True

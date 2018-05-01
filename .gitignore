@@ -9,3 +9,6 @@ yarn-error.log*
 lib
 lib_test
 .DS_Store
+bundle.js
+vendor.js
+app.js
