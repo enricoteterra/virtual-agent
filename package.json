@@ -28,16 +28,18 @@
     "coverage": "jest --coverage",
     "watch": "npm run build -- --watch",
     "watch:test": "jest --watch",
-    "compile-app": "browserify src/* -p [ tsify --noImplicitAny ] -x=babylonjs -x=cannon -x=earcut -x=oimo > app.js",
-    "compile-vendor": "browserify -r babylonjs -r cannon -r earcut -r oimo > vendor.js",
+    "compile-app": "browserify src/* -p [ tsify --noImplicitAny ] -x=babylonjs -x=cannon -x=earcut -x=oimo -x=socket.io-client > app.js",
+    "compile-vendor": "browserify -r babylonjs -r cannon -r earcut -r oimo -r socket.io-client > vendor.js",
     "serve": "node server.js"
   },
   "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
     "babylonjs": "^3.2.0-rc.3",
     "browserify": "^16.2.0",
     "cannon": "^0.6.2",
     "earcut": "^2.1.3",
-    "oimo": "^1.0.9"
+    "oimo": "^1.0.9",
+    "socket.io-client": "^2.1.0"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

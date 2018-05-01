@@ -13,7 +13,7 @@ class ScreenSensor(object):
   
         self.driver = webDriver
 
-    def getScreen(self):
+    def getScreenshot(self):
 
         data = self.driver.get_screenshot_as_png()
         img = Image.open(StringIO.StringIO(data))

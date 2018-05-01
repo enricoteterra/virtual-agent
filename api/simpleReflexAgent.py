@@ -1,36 +1,68 @@
 import time
+import redis
 from selenium import webdriver
-from units import unit
 from mouseActuator import MouseActuator
 from screenSensor import ScreenSensor
 from keyActuator import KeyActuator
-second = unit('s')
 
 class SimpleReflexAgent(object):
     """ an agent without state or goals, just react to last sensor percept. """
 
-    def loop(self, frequency=second(1)):
+    def __init__(self, r):
 
-        browser = webdriver.Chrome('/Users/enrico.t/bin/chromedriver')
-        browser.set_window_size('400', '300')
-        browser.set_window_position(0, 0)
-        browser.get('http://localhost:9615/index.html')
+        # setup selenium chromedriver
+        self.browser = webdriver.Chrome('/Users/enrico.t/bin/chromedriver')
+        self.browser.set_window_size('400', '300')
+        self.browser.set_window_position(0, 0)
+        self.browser.get('http://localhost:9615/index.html')
 
-        sensor = ScreenSensor(browser)
-        mouse = MouseActuator(browser)
-        key = KeyActuator(browser)
+        self.sensor = ScreenSensor(self.browser)
+        self.mouse = MouseActuator(self.browser)
+        self.key  = KeyActuator(self.browser)
 
-        # start the loop
+        # setup redis connection
+        self.r = r
+        self.p = self.r.pubsub()
+        self.p.subscribe('percepts')  
+
+
+    def screencaptureLoop(self, frequency=1.0):
+
         while True:
 
-            # wait a bit
             time.sleep(frequency)
 
-            # get latest screen state
-            state = sensor.getScreen()
-            # browser.get_screenshot_as_file('./latest.png')
+            try:
+                self.r.publish('percepts', {
+                    "type": "screenshot",
+                    "unixTimeStamp": time.time(),
+                    "data": self.sensor.getScreenshot()
+                })
+                
+            except:
+                pass
+
+
+
+    def actLoop(self, frequency=1.0):
+
+        while True:
+
+            time.sleep(frequency)
+
+            newMessages = True
+            while newMessages is True:
+                
+                # process for new messages
+                message = self.p.get_message()
+                if message:
+                    data = message['data']
+                    print data
+
+                else:
+                    newMessages = False
 
             # perform an action
-            # mouse.scrollRight()
-            mouse.scrollUp(20)
-            key.pressDown(0.2)
+            # self.mouse.scrollRight()
+            # self.mouse.scrollUp(20)
+            self.key.pressDown(0.2)
