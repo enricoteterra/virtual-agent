@@ -6,8 +6,8 @@ import redis
 import time
 from flask import Flask
 from flask_socketio import SocketIO
-from webdriverManager import WebDriverManager
-from randomPolicyAgent import RandomPolicyAgent
+from webdriver.webdriverManager import WebDriverManager
+from agents.randomPolicyAgent import RandomPolicyAgent
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'

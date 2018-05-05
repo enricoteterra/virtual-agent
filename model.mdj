@@ -3805,7 +3805,7 @@
 							"width": 185,
 							"height": 38,
 							"autoResize": false,
-							"text": "API/Streaming Layer - Python",
+							"text": "Webdriver Layer - Python",
 							"wordWrap": true
 						},
 						{
