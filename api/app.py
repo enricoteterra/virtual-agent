@@ -1,11 +1,13 @@
 import sys
-import time
 import threading
 import logging
+import json
 import redis
+import time
 from flask import Flask
 from flask_socketio import SocketIO
-from simpleReflexAgent import SimpleReflexAgent
+from webdriverManager import WebDriverManager
+from randomPolicyAgent import RandomPolicyAgent
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -20,12 +22,11 @@ socketio = SocketIO(app)
 
 @socketio.on('message')
 def handle_message(message):
-    print message
-    r.publish('percepts', message)
+    r.publish('percepts', json.dumps(message))
 
 if __name__ == '__main__':
 
-    agent = SimpleReflexAgent(r)
+    webdriver = WebDriverManager(r)
 
     try:
         # start webserver
@@ -33,12 +34,15 @@ if __name__ == '__main__':
             target=socketio.run, args=(app,))
         webserverThread.start()
 
-        # start simulation & agent threads
-        agentScreencaptureThread = threading.Thread(target=agent.screencaptureLoop)
-        agentScreencaptureThread.start()
+        # start webdriver-simulation thread
+        webdriverActThread = threading.Thread(
+            target=webdriver.loop, args=(.5,))
+        webdriverActThread.start()
 
-        agentActThread = threading.Thread(target=agent.actLoop)
-        agentActThread.start()
+        # agent action sequence
+        time.sleep(.5)
+        agent = RandomPolicyAgent(r)
+        agent.publishSequence(.5, .5)
 
     except KeyboardInterrupt:
         sys.exit()
