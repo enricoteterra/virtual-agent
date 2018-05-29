@@ -57,7 +57,9 @@ class WebDriverManager(object):
 
                             for action in actions:
 
-                                print (action['type'] + action['direction'])
+                                print (action['type'] + ' ' \
+                                     + action['direction'] + ' ' \
+                                     + str(action['factor']))
 
                                 if action['type'] == 'look':
 
