@@ -8,18 +8,15 @@ class MouseActuator(object):
 
     def __init__(self, webDriver):
 
-        if webDriver is None:
-            raise ValueError
-        
         self.driver = webDriver
         self.canvas = webDriver.find_element_by_tag_name('canvas')
 
     def scaleFactor(self, factor):
         """ we want a number between 0 and 1 to describe how far to scroll 
             relative to the screen dimensions. we need to translate that number
-            into pixels. placeholder conversion. """
+            into pixels. @TODO: come up with something smarter """
 
-        return factor * 200
+        return factor * 300
         
 
     def scrollUp(self, distance=20):

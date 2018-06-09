@@ -10,9 +10,6 @@ class ScreenSensor(object):
 
     def __init__(self, webDriver, r):
 
-        if webDriver is None:
-            raise ValueError
-  
         self.driver = webDriver
         self.r = r
 

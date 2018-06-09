@@ -18,6 +18,9 @@ class WebDriverManager(object):
         self.browser.set_window_position(0, 0)
         self.browser.get('http://localhost:9615/index.html')
 
+        if self.browser is None:
+            raise ValueError
+
         # setup redis connection
         self.r = r
         self.p = self.r.pubsub()
@@ -28,12 +31,12 @@ class WebDriverManager(object):
         self.key  = KeyActuator(self.browser)
 
 
-    def loop(self, frequency=1.0):
+    def loop(self, loopFrequency=0.25):
 
         # i = 0
         while True:
 
-            time.sleep(frequency)
+            time.sleep(loopFrequency)
 
             # capture screen
             self.screen.publishScreenshot()

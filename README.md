@@ -1,5 +1,5 @@
 # Semantic Grounding
-teach an agent the notions of spatial representation and manipulation with the aim of developing grounded concepts that can be used in natural language. 
+teach an agent the notions of spatial representation and manipulation with the aim of developing grounded concept models that can be used to better interpret natural language. 
 
 ## Future
 
@@ -8,7 +8,7 @@ teach an agent the notions of spatial representation and manipulation with the a
 - communication between agents evolves indicative, imperative and interrogative elements (see Russell)
 - create a more immersive world & agents that are more closely aligned to human bodies (in terms of sensors & actuators)
 
-## compile world
+## compile & run world
 
 use "npm install"
 
@@ -16,17 +16,21 @@ use "npm run compile-vendor && npm run compile-app"
 
 use "npm run serve"
 
-page then becomes available at http://localhost:9615/index.html
+virtual environment served at http://localhost:9615/index.html
 
 ## start agent
 
-*note: you need to run a local redis, also install chromedriver.*
+*note: you need to run a local redis, which is used as microservice glue.*
 
-setup virtualenv and install requirements
+setup virtualenv and install requirements: 
 
-use "python app.py"
+use "source env/bin/activate"
+
+use "pip install -r requirements.txt"
+
+use "python app/app.py"
 
 ## todo
-- design & code basic interacting agent
-- adjust world for goal-learning scenario
+- unit tests python webdriver and agents
+- design & code dqn & gan agents based on papers
 - ...

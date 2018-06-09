@@ -13,7 +13,7 @@ class RandomPolicyAgent(object):
         self.p = self.r.pubsub()
 
 
-    def generateSequence(self, steps=10, baseFactor=1.0):
+    def generateActionSequence(self, steps=10, baseMovementFactor=1.0):
 
         possibleActions = [
             'lookLeft', 'lookUp', 'lookRight', 'lookDown',
@@ -29,18 +29,18 @@ class RandomPolicyAgent(object):
                 'action': choice,
                 'type': choice[:4],
                 'direction': choice[4:].lower(),
-                'factor': random.uniform(0, 1) * baseFactor
+                'factor': random.uniform(0, 1) * baseMovementFactor
             })
 
-        return { 'actions' : actionSequence }
+        return {'actions' : actionSequence}
 
 
-    def publishSequence(self, frequency=1.0, baseFactor=1.0):
-        
+    def publishSequence(self, publishFrequency=0.25, baseMovementFactor=0.25, stepsPerIteration=2):
+
         while True:
 
-            time.sleep(frequency)
+            time.sleep(publishFrequency)
 
             # generate a random step and publish it
             self.r.publish('actions', json.dumps(
-                self.generateSequence(1, baseFactor)))
+                self.generateActionSequence(stepsPerIteration, baseMovementFactor)))

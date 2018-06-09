@@ -2,17 +2,14 @@ import json, time
 
 class KeyActuator(object):
 
-    """ enables agent to move around the virtual environment 
+    """ enables agent to move around the virtual environment
         by using the WASD keys. """
 
     def __init__(self, webDriver):
 
-        if webDriver is None:
-            raise ValueError
-        
         self.driver = webDriver
 
-    def pressDown(self, duration=0.2):
+    def pressDown(self, defaultDuration=0.2):
         options = { \
             "code": "KeyS",
             "key": "s",
@@ -21,9 +18,9 @@ class KeyActuator(object):
             "nativeVirtualKeyCode": ord("S"),
             "windowsVirtualKeyCode": ord("S")
         }
-        self.holdKeyDown(self.driver, duration, options)
+        self.holdKeyDown(defaultDuration, options)
 
-    def pressUp(self, duration=0.2):
+    def pressUp(self, defaultDuration=0.2):
         options = { \
             "code": "KeyW",
             "key": "w",
@@ -32,9 +29,9 @@ class KeyActuator(object):
             "nativeVirtualKeyCode": ord("W"),
             "windowsVirtualKeyCode": ord("W")
         }
-        self.holdKeyDown(self.driver, duration, options)
+        self.holdKeyDown(defaultDuration, options)
 
-    def pressLeft(self, duration=0.2):
+    def pressLeft(self, defaultDuration=0.2):
         options = { \
             "code": "KeyA",
             "key": "a",
@@ -43,9 +40,9 @@ class KeyActuator(object):
             "nativeVirtualKeyCode": ord("A"),
             "windowsVirtualKeyCode": ord("A")
         }
-        self.holdKeyDown(self.driver, duration, options)
+        self.holdKeyDown(defaultDuration, options)
 
-    def pressRight(self, duration=0.2):
+    def pressRight(self, defaultDuration=0.2):
         options = { \
             "code": "KeyD",
             "key": "d",
@@ -54,25 +51,29 @@ class KeyActuator(object):
             "nativeVirtualKeyCode": ord("D"),
             "windowsVirtualKeyCode": ord("D")
         }
-        self.holdKeyDown(self.driver, duration, options)
+        self.holdKeyDown(defaultDuration, options)
 
 
-    def dispatchKeyEvent(self, driver, name, options = {}):
+    def dispatchKeyEvent(self, name, options = {}):
+
         options["type"] = name
         body = json.dumps({'cmd': 'Input.dispatchKeyEvent', 'params': options})
-        resource = "/session/%s/chromium/send_command" % driver.session_id
-        url = driver.command_executor._url + resource
-        driver.command_executor._request('POST', url, body)
+        resource = "/session/%s/chromium/send_command" % self.driver.session_id
 
-    def holdKeyDown(self, driver, duration, options):
-        endtime = time.time() + duration
+        url = self.driver.command_executor._url + resource
+        self.driver.command_executor._request('POST', url, body)
+
+
+    def holdKeyDown(self, defaultDuration, options):
+
+        endtime = time.time() + defaultDuration
 
         while True:
-            self.dispatchKeyEvent(self.driver, "rawKeyDown", options)
-            self.dispatchKeyEvent(self.driver, "char", options)
+            self.dispatchKeyEvent("rawKeyDown", options)
+            self.dispatchKeyEvent("char", options)
 
             if time.time() > endtime:
-                self.dispatchKeyEvent(self.driver, "keyUp", options)
+                self.dispatchKeyEvent("keyUp", options)
                 break
 
             options["autoRepeat"] = True
