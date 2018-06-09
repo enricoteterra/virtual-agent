@@ -13,7 +13,7 @@ class WebDriverManager(object):
     def __init__(self, r):
 
         # setup selenium chromedriver
-        self.browser = webdriver.Chrome('/Users/enrico.t/bin/chromedriver')
+        self.browser = webdriver.Chrome('chromedriver')
         self.browser.set_window_size('400', '300')
         self.browser.set_window_position(0, 0)
         self.browser.get('http://localhost:9615/index.html')

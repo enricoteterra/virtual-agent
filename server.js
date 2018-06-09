@@ -10,8 +10,12 @@ http.createServer(function (request, response) {
         var requestUrl = url.parse(request.url)
 
         var fsPath = baseDirectory+path.normalize(requestUrl.pathname)
+        if ( requestUrl.pathname == "/")
+            var fsPath = baseDirectory + '/index.html'
 
         var fileStream = fs.createReadStream(fsPath)
+        console.log('serving: '+fsPath)
+
         fileStream.pipe(response)
         fileStream.on('open', function() {
              response.writeHead(200)

@@ -10,11 +10,19 @@ teach an agent the notions of spatial representation and manipulation with the a
 
 ## compile world
 
-use "npm run compile"
+use "npm install"
+
+use "npm run compile-vendor && npm run compile-app"
+
 use "npm run serve"
+
 page then becomes available at http://localhost:9615/index.html
 
 ## start agent
+
+*note: you need to run a local redis, also install chromedriver.*
+
+setup virtualenv and install requirements
 
 use "python app.py"
 
