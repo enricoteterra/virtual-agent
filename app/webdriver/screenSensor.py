@@ -13,10 +13,12 @@ class ScreenSensor(object):
         self.driver = webDriver
         self.r = r
 
-    def publishScreenshot(self):
+    def publishScreenshot(self, img=None):
 
-        data = self.driver.get_screenshot_as_png()
-        img = Image.open(StringIO.StringIO(data))
+        if img is None:
+            data = self.driver.get_screenshot_as_png()
+            img = Image.open(StringIO.StringIO(data))
+
         width, height = img.size
 
         serialisedData = np.asarray(img).tolist()

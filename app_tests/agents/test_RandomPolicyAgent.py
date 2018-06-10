@@ -93,18 +93,18 @@ class RandomPolicyAgentTest(unittest.TestCase):
         sub = self.mockRedis.pubsub()
         sub.subscribe('actions')  
 
-        msg = sub.get_message()
-        self.assertTrue(msg["data"] == 1L)
-
         self.agent.publishSequence(baseMovementFactor=1.0, stepsPerIteration=1)
 
-        msg = sub.get_message()
-        jsonschema.validate(
-            json.loads(msg["data"]), 
-            self.actionSequenceSchema)
+        for msg in sub.listen():
+            if msg is not None and msg["data"] != 1l:
+                jsonschema.validate(
+                json.loads(msg["data"]),
+                self.actionSequenceSchema)
+                break
 
         msg = sub.get_message()
         self.assertIsNone(msg)
+
 
     def test_publishSequence_manySteps(self):
         """
@@ -112,17 +112,16 @@ class RandomPolicyAgentTest(unittest.TestCase):
         """
 
         sub = self.mockRedis.pubsub()
-        sub.subscribe('actions')  
-
-        msg = sub.get_message()
-        self.assertTrue(msg["data"] == 1L)
+        sub.subscribe('actions')
 
         self.agent.publishSequence(baseMovementFactor=1.0, stepsPerIteration=10)
 
-        msg = sub.get_message()
-        jsonschema.validate(
-            json.loads(msg["data"]), 
-            self.actionSequenceSchema)
+        for msg in sub.listen():
+            if msg is not None and msg["data"] != 1l:
+                jsonschema.validate(
+                json.loads(msg["data"]),
+                self.actionSequenceSchema)
+                break
 
         msg = sub.get_message()
         self.assertIsNone(msg)

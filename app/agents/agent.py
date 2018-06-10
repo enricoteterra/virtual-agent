@@ -32,21 +32,11 @@ class Agent(object):
 
         screenshots = []
 
-        newMessages = True
-        while newMessages is True:
-            
-            message = self.p.get_message()
-            if message:
-                data = message['data']
+        for msg in self.p.listen():
+            if msg is not None and msg["data"] != 1l:
 
-                if isinstance(data, basestring):
+                data = msg["data"]
 
-                    jsonData = json.loads(data)
-                    if jsonData['type'] is "screenshot":
-                        screenshots.append(json.loads(data))
-
-            else:
-                newMessages = False
-
-                # self.model.fit(x_train, y_train,
-                #     batch_size=len(screenshots))
+                jsonData = json.loads(data)
+                if jsonData['type'] is "screenshot":
+                    screenshots.append(json.loads(data))

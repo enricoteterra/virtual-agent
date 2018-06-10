@@ -31,6 +31,7 @@ use "pip install -r requirements.txt"
 use "python app/app.py"
 
 ## todo
+- adjust environment with reward: level resets when goal achieved
 - unit tests python webdriver and agents
 - design & code dqn & gan agents based on papers
 - ...

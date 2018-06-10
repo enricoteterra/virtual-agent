@@ -40,61 +40,51 @@ class WebDriverManager(object):
 
             # capture screen
             self.screen.publishScreenshot()
-            # i += 1
             # self.browser.save_screenshot('latest ' + str(i) + '.png')
 
             # listen to actions channel and trigger corresponding actuators
-            newMessages = True
-            while newMessages is True:
+            for msg in self.p.listen():
+                if msg is not None and msg["data"] != 1l:
+                    data = msg["data"]
+                    jsonData = json.loads(data)
 
-                message = self.p.get_message()
-                if message:
-                    data = message['data']
+                    if 'actions' in jsonData:
+                        actions = jsonData['actions']
 
-                    if isinstance(data, basestring):
+                        for action in actions:
 
-                        jsonData = json.loads(data)
+                            print (action['actuator'] + ' ' \
+                                    + action['direction'] + ' ' \
+                                    + str(action['factor']))
 
-                        if 'actions' in jsonData:
-                            actions = jsonData['actions']
+                            if action['actuator'] == 'look':
 
-                            for action in actions:
+                                if action['direction'] == 'up':
+                                    self.mouse.scrollUp(
+                                        self.mouse.scaleFactor(action['factor']))
 
-                                print (action['actuator'] + ' ' \
-                                     + action['direction'] + ' ' \
-                                     + str(action['factor']))
+                                elif action['direction'] == 'down':
+                                    self.mouse.scrollDown(
+                                        self.mouse.scaleFactor(action['factor']))
 
-                                if action['actuator'] == 'look':
+                                elif action['direction'] == 'left':
+                                    self.mouse.scrollLeft(
+                                        self.mouse.scaleFactor(action['factor']))
 
-                                    if action['direction'] == 'up':
-                                        self.mouse.scrollUp(
-                                            self.mouse.scaleFactor(action['factor']))
+                                elif action['direction'] == 'right':
+                                    self.mouse.scrollRight(
+                                        self.mouse.scaleFactor(action['factor']))
 
-                                    elif action['direction'] == 'down':
-                                        self.mouse.scrollDown(
-                                            self.mouse.scaleFactor(action['factor']))
+                            elif action['actuator'] == 'move':
 
-                                    elif action['direction'] == 'left':
-                                        self.mouse.scrollLeft(
-                                            self.mouse.scaleFactor(action['factor']))
+                                if action['direction'] == 'forward':
+                                    self.key.pressUp(action['factor'])
 
-                                    elif action['direction'] == 'right':
-                                        self.mouse.scrollRight(
-                                            self.mouse.scaleFactor(action['factor']))
+                                elif action['direction'] == 'back':
+                                    self.key.pressDown(action['factor'])
 
-                                elif action['actuator'] == 'move':
+                                elif action['direction'] == 'left':
+                                    self.key.pressLeft(action['factor'])
 
-                                    if action['direction'] == 'forward':
-                                        self.key.pressUp(action['factor'])
-
-                                    elif action['direction'] == 'back':
-                                        self.key.pressDown(action['factor'])
-
-                                    elif action['direction'] == 'left':
-                                        self.key.pressLeft(action['factor'])
-
-                                    elif action['direction'] == 'right':
-                                        self.key.pressRight(action['factor'])
-
-                else:
-                    newMessages = False
+                                elif action['direction'] == 'right':
+                                    self.key.pressRight(action['factor'])
