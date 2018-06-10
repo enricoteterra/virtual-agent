@@ -12,22 +12,22 @@ class RandomPolicyAgent(object):
         self.r = r
         self.p = self.r.pubsub()
 
-
-    def generateActionSequence(self, steps=10, baseMovementFactor=1.0):
-
-        possibleActions = [
+        self.possibleActions = [
             'lookLeft', 'lookUp', 'lookRight', 'lookDown',
             'moveLeft', 'moveForward', 'moveRight', 'moveBack'
         ]
+
+
+    def generateActionSequence(self, steps=10, baseMovementFactor=1.0):
 
         actionSequence = []
 
         for step in range(0, steps):
 
-            choice = random.choice(possibleActions)
+            choice = random.choice(self.possibleActions)
             actionSequence.append({
                 'action': choice,
-                'type': choice[:4],
+                'actuator': choice[:4],
                 'direction': choice[4:].lower(),
                 'factor': random.uniform(0, 1) * baseMovementFactor
             })
@@ -35,12 +35,14 @@ class RandomPolicyAgent(object):
         return {'actions' : actionSequence}
 
 
-    def publishSequence(self, publishFrequency=0.25, baseMovementFactor=0.25, stepsPerIteration=2):
+    def publishSequence(self, baseMovementFactor=1.0, stepsPerIteration=1):
+        self.r.publish('actions', json.dumps(
+            self.generateActionSequence(stepsPerIteration, baseMovementFactor)))
+
+
+    def publishSequenceLoop(self, publishFrequency=1.0, baseMovementFactor=1.0, stepsPerIteration=1):
 
         while True:
 
             time.sleep(publishFrequency)
-
-            # generate a random step and publish it
-            self.r.publish('actions', json.dumps(
-                self.generateActionSequence(stepsPerIteration, baseMovementFactor)))
+            self.publishSequence(baseMovementFactor, stepsPerIteration)

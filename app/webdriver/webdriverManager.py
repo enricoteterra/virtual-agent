@@ -60,11 +60,11 @@ class WebDriverManager(object):
 
                             for action in actions:
 
-                                print (action['type'] + ' ' \
+                                print (action['actuator'] + ' ' \
                                      + action['direction'] + ' ' \
                                      + str(action['factor']))
 
-                                if action['type'] == 'look':
+                                if action['actuator'] == 'look':
 
                                     if action['direction'] == 'up':
                                         self.mouse.scrollUp(
@@ -82,7 +82,7 @@ class WebDriverManager(object):
                                         self.mouse.scrollRight(
                                             self.mouse.scaleFactor(action['factor']))
 
-                                elif action['type'] == 'move':
+                                elif action['actuator'] == 'move':
 
                                     if action['direction'] == 'forward':
                                         self.key.pressUp(action['factor'])

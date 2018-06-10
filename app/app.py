@@ -11,7 +11,6 @@ import sys
 import threading
 import logging
 import json
-import time
 import redis
 from flask import Flask
 from flask_socketio import SocketIO
@@ -53,9 +52,9 @@ if __name__ == '__main__':
 
         # agent action sequence
         agent = RandomPolicyAgent(r)
-        agent.publishSequence( 
+        agent.publishSequenceLoop(
             publishFrequency=.1,
-            baseMovementFactor=.2, 
+            baseMovementFactor=.2,
             stepsPerIteration=1)
 
     except (KeyboardInterrupt, SystemExit):
