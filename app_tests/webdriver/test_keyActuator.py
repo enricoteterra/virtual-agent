@@ -3,4 +3,4 @@ from app.webdriver import KeyActuator
 
 class KeyActuatorTest(unittest.TestCase):
 
-    """@TODO could listen to dispatch"""
+    """@TODO listen to dispatch & validate contract"""

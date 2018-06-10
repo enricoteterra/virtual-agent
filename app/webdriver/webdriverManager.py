@@ -1,5 +1,4 @@
 import time
-import redis
 import json
 from selenium import webdriver
 from mouseActuator import MouseActuator
@@ -24,7 +23,7 @@ class WebDriverManager(object):
         # setup redis connection
         self.r = r
         self.p = self.r.pubsub()
-        self.p.subscribe('actions')  
+        self.p.subscribe('actions')
 
         self.screen = ScreenSensor(self.browser, self.r)
         self.mouse = MouseActuator(self.browser)
@@ -33,7 +32,6 @@ class WebDriverManager(object):
 
     def loop(self, loopFrequency=0.25):
 
-        # i = 0
         while True:
 
             time.sleep(loopFrequency)

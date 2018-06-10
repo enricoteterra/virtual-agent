@@ -32,6 +32,7 @@ use "python app/app.py"
 
 ## todo
 - adjust environment with reward: level resets when goal achieved
+- separate screenshot taking and actuator trigger in webdriver-manager
 - unit tests python webdriver and agents
 - design & code dqn & gan agents based on papers
 - ...

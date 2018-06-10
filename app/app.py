@@ -53,7 +53,7 @@ if __name__ == '__main__':
         # agent action sequence
         agent = RandomPolicyAgent(r)
         agent.publishSequenceLoop(
-            publishFrequency=.1,
+            publishFrequency=.2,
             baseMovementFactor=.2,
             stepsPerIteration=1)
 

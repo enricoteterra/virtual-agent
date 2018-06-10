@@ -39,16 +39,18 @@ class ScreenSensorTest(unittest.TestCase):
         }
 
     def createTestImage(self):
-        file = BytesIO()
+        testFile = BytesIO()
         image = Image.new(
             'RGBA', 
             size=(400, 300), 
             color=(155, 0, 0))
 
-        image.save(file, 'png')
-        file.name = 'test.png'
-        file.seek(0)
-        return Image.open(StringIO.StringIO(file.read()))
+        image.save(testFile, 'png')
+        testFile.name = 'test.png'
+        testFile.seek(0)
+        
+        return Image.open(
+            StringIO.StringIO(testFile.read()))
 
     def test_publishScreenshot(self):
         """
