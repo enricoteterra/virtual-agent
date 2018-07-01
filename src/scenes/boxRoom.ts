@@ -1,30 +1,28 @@
 import * as BABYLON from 'babylonjs';
 
-var canvas = document.getElementById('canvas') as HTMLCanvasElement;
-var engine = new BABYLON.Engine(canvas, true);
+export const createScene = (
+    engine:BABYLON.Engine, canvas:HTMLCanvasElement): BABYLON.Scene => {
 
-var createScene = function(){
-
-    var scene = new BABYLON.Scene(engine);
+    const scene = new BABYLON.Scene(engine);
     // scene.clearColor = BABYLON.Color3.Purple();
 
-    var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, -2, -20), scene);
+    const camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, -2, -20), scene);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     camera.setTarget(new BABYLON.Vector3(0, 0, 0));
     camera.attachControl(canvas,true);
 
-    var light = new BABYLON.DirectionalLight("dir02", new BABYLON.Vector3(0.2, -1, 0), scene);
+    const light = new BABYLON.DirectionalLight("dir02", new BABYLON.Vector3(0.2, -1, 0), scene);
     light.position = new BABYLON.Vector3(0, 80, 0);
 
     // Shadows
-    var shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
+    const shadowGenerator = new BABYLON.ShadowGenerator(2048, light);
 
     // Physics
-    //scene.enablePhysics(null, new BABYLON.CannonJSPlugin());
+    // scene.enablePhysics(null, new BABYLON.CannonJSPlugin());
     scene.enablePhysics(null, new BABYLON.OimoJSPlugin());
 
-    var boxMaterial = new BABYLON.StandardMaterial('mat', scene);
+    const boxMaterial = new BABYLON.StandardMaterial('mat', scene);
     boxMaterial.alpha = 1;
     boxMaterial.backFaceCulling = true;
     boxMaterial.specularPower = 64;
@@ -35,7 +33,7 @@ var createScene = function(){
     boxMaterial.ambientColor = new BABYLON.Color3(0.00, 0.00, 0.00);
     boxMaterial.specularColor = new BABYLON.Color3(1.00, 1.00, 1.00);
 
-    var specialBox = new BABYLON.StandardMaterial('specialBox', scene);
+    const specialBox = new BABYLON.StandardMaterial('specialBox', scene);
     specialBox.alpha = 1;
     specialBox.backFaceCulling = true;
     specialBox.specularPower = 64;
@@ -46,12 +44,12 @@ var createScene = function(){
     specialBox.ambientColor = new BABYLON.Color3(0.00, 0.00, 0.00);
     specialBox.specularColor = new BABYLON.Color3(1.00, 1.00, 1.00);
 
-    var y = 0;
-    var boxSent = false;
+    let y = 0;
+    let boxSent = false;
 
-    for (var index = 0; index < 100; index++) {
+    for (let index = 0; index < 100; index++) {
 
-        var box = BABYLON.Mesh.CreateBox("Box0", 3, scene);
+        const box = BABYLON.Mesh.CreateBox("Box0", 3, scene);
         box.material = boxMaterial;
         box.position = new BABYLON.Vector3(Math.random() * 20 - 10, y, Math.random() * 10 - 5);
         shadowGenerator.getShadowMap()!.renderList!.push(box);
@@ -66,36 +64,36 @@ var createScene = function(){
     }
 
     // Playground
-    var ground = BABYLON.Mesh.CreateBox("Ground", 1, scene);
+    const ground = BABYLON.Mesh.CreateBox("Ground", 1, scene);
     ground.scaling = new BABYLON.Vector3(100, 1, 100);
     ground.position.y = -5.0;
     ground.checkCollisions = true;
 
-    var border0 = BABYLON.Mesh.CreateBox("border0", 1, scene);
+    const border0 = BABYLON.Mesh.CreateBox("border0", 1, scene);
     border0.scaling = new BABYLON.Vector3(1, 100, 100);
     border0.position.y = -5.0;
     border0.position.x = -50.0;
     border0.checkCollisions = true;
 
-    var border1 = BABYLON.Mesh.CreateBox("border1", 1, scene);
+    const border1 = BABYLON.Mesh.CreateBox("border1", 1, scene);
     border1.scaling = new BABYLON.Vector3(1, 100, 100);
     border1.position.y = -5.0;
     border1.position.x = 50.0;
     border1.checkCollisions = true;
 
-    var border2 = BABYLON.Mesh.CreateBox("border2", 1, scene);
+    const border2 = BABYLON.Mesh.CreateBox("border2", 1, scene);
     border2.scaling = new BABYLON.Vector3(100, 100, 1);
     border2.position.y = -5.0;
     border2.position.z = 50.0;
     border2.checkCollisions = true;
 
-    var border3 = BABYLON.Mesh.CreateBox("border3", 1, scene);
+    const border3 = BABYLON.Mesh.CreateBox("border3", 1, scene);
     border3.scaling = new BABYLON.Vector3(100, 100, 1);
     border3.position.y = -5.0;
     border3.position.z = -50.0;
     border3.checkCollisions = true;
 
-    var groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+    const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
     groundMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
     groundMat.emissiveColor = new BABYLON.Color3(0.2, 0.2, 0.2);
     groundMat.backFaceCulling = false;
@@ -120,18 +118,3 @@ var createScene = function(){
 
     return scene;
 }
-
-var scene = createScene();
-// scene.debugLayer.show();
-
-engine.runRenderLoop(function(){
-    scene.render();
-});
-
-window.addEventListener('resize', function(){
-    engine.resize();
-});
-
-var canvas=document.getElementById('canvas') as HTMLCanvasElement;
-canvas.setAttribute('tabindex','0');
-canvas.focus();

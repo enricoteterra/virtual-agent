@@ -20,7 +20,7 @@
   "scripts": {
     "start": "python app/app.py",
     "pytest": "python -m unittest discover -v",
-    "compile-app": "browserify src/* -p [ tsify --noImplicitAny ] -x=babylonjs -x=cannon -x=earcut -x=oimo -x=socket.io-client > app.js",
+    "compile-app": "browserify src/*/** -p [ tsify --noImplicitAny ] -x=babylonjs -x=cannon -x=earcut -x=oimo -x=socket.io-client > bundle.js",
     "compile-vendor": "browserify -r babylonjs -r cannon -r earcut -r oimo -r socket.io-client > vendor.js",
     "serve": "node server.js"
   },

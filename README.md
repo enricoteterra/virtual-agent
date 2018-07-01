@@ -31,7 +31,7 @@ use "pip install -r requirements.txt"
 use "python app/app.py"
 
 ## todo
-- adjust environment with reward: level resets when goal achieved
+- adjust environment with reward: level resets when goal achieved and score increases
 - separate screenshot taking and actuator trigger in webdriver-manager
 - make socketio api endpoint testable
 - design & code dqn & gan agents based on papers
